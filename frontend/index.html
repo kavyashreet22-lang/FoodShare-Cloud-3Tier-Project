@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodShare - Share Food, Spread Happiness</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7faf7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #27834b;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav h2 {
+            font-size: 25px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #d8ffd8;
+        }
+
+        /* COMMON SECTIONS */
+        .section {
+            padding: 55px 7%;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #27834b;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+
+        /* HOME */
+        .hero {
+            background: linear-gradient(120deg, #27834b, #70bd78);
+            color: white;
+            padding: 90px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            margin-bottom: 25px;
+        }
+
+        .hero a {
+            display: inline-block;
+            background: white;
+            color: #27834b;
+            padding: 13px 25px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* DASHBOARD */
+        .dashboard-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 30px auto;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 25px;
+            width: 240px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px #00000015;
+        }
+
+        .dashboard-card h3 {
+            color: #27834b;
+        }
+
+        .dashboard-card p {
+            font-size: 34px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .table-container {
+            max-width: 750px;
+            margin: 30px auto;
+            overflow-x: auto;
+        }
+
+        .donation-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .donation-table th,
+        .donation-table td {
+            padding: 14px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .donation-table th {
+            background: #27834b;
+            color: white;
+        }
+
+        .donation-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        /* BUTTONS */
+        button {
+            padding: 13px 22px;
+            background: #27834b;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1d6639;
+        }
+
+        /* SERVICES */
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 25px;
+            width: 250px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px #00000012;
+        }
+
+        .service-card h3 {
+            color: #27834b;
+            margin-bottom: 10px;
+        }
+
+        /* DONATION FORM */
+        form {
+            background: white;
+            max-width: 480px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #00000015;
+        }
+
+        form input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        form button {
+            width: 100%;
+        }
+
+        #formMessage {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #205b35;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .section {
+                padding: 40px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <h2>🍃 FoodShare</h2>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#donate">Food Donation</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#admin">Admin</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- 1. HOME -->
+    <section class="hero" id="home">
+
+        <h1>Share Food, Spread Happiness ❤️</h1>
+
+        <p>
+            Let's reduce food waste and help people in need.
+        </p>
+
+        <a href="#donate">Donate Food Now</a>
+
+    </section>
+
+
+    <!-- 2. DASHBOARD -->
+    <section class="section" id="dashboard">
+
+        <h2>FoodShare Dashboard 📊</h2>
+
+        <p>
+            Overview of food donations received through FoodShare.
+        </p>
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <h3>Total Donations</h3>
+                <p id="totalDonations">0</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Different Food Types</h3>
+                <p id="foodTypes">0</p>
+            </div>
+
+        </div>
+
+        <h2>Recent Donations 🍱</h2>
+
+        <div class="table-container">
+
+            <table class="donation-table">
+
+                <thead>
+                    <tr>
+                        <th>Food Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+
+                <tbody id="donationList">
+
+                    <tr>
+                        <td colspan="2">Loading donations...</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <button onclick="loadDonations()">
+            Refresh Dashboard
+        </button>
+
+    </section>
+
+
+    <!-- 3. SERVICES -->
+    <section class="section" id="services">
+
+        <h2>Our Services</h2>
+
+        <div class="services">
+
+            <div class="service-card">
+                <h3>🍱 Donate Food</h3>
+                <p>
+                    Share extra food with people who need it.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <h3>🤝 Request Food</h3>
+                <p>
+                    Connect with available food donations.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <h3>🌍 Reduce Waste</h3>
+                <p>
+                    Help reduce unnecessary food waste.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 4. FOOD DONATION -->
+    <section class="section" id="donate">
+
+        <h2>Donate Food 🍱</h2>
+
+        <p>
+            Have extra food? Share it with someone who needs it.
+        </p>
+
+        <form id="donationForm">
+
+            <input
+                type="text"
+                id="donorName"
+                placeholder="Your Name"
+                required
+            >
+
+            <input
+                type="text"
+                id="foodName"
+                placeholder="Food Name"
+                required
+            >
+
+            <input
+                type="text"
+                id="quantity"
+                placeholder="Quantity (e.g. 5 meals)"
+                required
+            >
+
+            <input
+                type="text"
+                id="location"
+                placeholder="Pickup Location"
+                required
+            >
+
+            <input
+                type="tel"
+                id="contact"
+                placeholder="Contact Number"
+                required
+            >
+
+            <button type="submit">
+                Submit Donation
+            </button>
+
+            <p id="formMessage"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- 5. ABOUT -->
+    <section class="section" id="about">
+
+        <h2>About FoodShare</h2>
+
+        <p>
+            FoodShare is an educational cloud project designed
+            to connect people who have extra food with people
+            who need it.
+
+            Our mission is to reduce food waste and spread
+            happiness through sharing.
+        </p>
+
+    </section>
+
+
+
+    <!-- ADMIN DASHBOARD -->
+    <section class="section" id="admin">
+        <h2>FoodShare Admin Dashboard</h2>
+        <p>Manage donations and confirm food collection.</p>
+
+        <div style="background:white;max-width:650px;margin:25px auto;padding:25px;border-radius:12px;box-shadow:0 5px 20px #00000015;">
+            <h3>Admin Login</h3>
+            <input type="password" id="adminPassword"
+                placeholder="Enter admin password"
+                style="padding:12px;width:70%;max-width:350px;margin:12px;border:1px solid #ccc;border-radius:6px;">
+            <button onclick="loadAdminDonations()"
+                style="padding:12px 18px;background:#27834b;color:white;border:0;border-radius:6px;cursor:pointer;">
+                Login / Load Donations
+            </button>
+            <p id="adminMessage" style="margin:12px;"></p>
+        </div>
+
+        <div id="adminDonationList" style="max-width:750px;margin:auto;text-align:left;">
+            <p>Please log in to view donations.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            © 2026 FoodShare | Share Food, Spread Happiness ❤️
+        </p>
+
+        <p>
+            Educational AWS Cloud Project
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        // =================================
+        // 1. SUBMIT FOOD DONATION
+        // =================================
+
+        const form = document.getElementById("donationForm");
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const message = document.getElementById("formMessage");
+
+            const donation = {
+
+                name: document.getElementById("donorName").value.trim(),
+
+                food: document.getElementById("foodName").value.trim(),
+
+                quantity: document.getElementById("quantity").value.trim(),
+
+                location: document.getElementById("location").value.trim(),
+
+                contact: document.getElementById("contact").value.trim()
+
+            };
+
+            message.textContent = "Submitting donation...";
+            message.style.color = "#27834b";
+
+            try {
+
+                const response = await fetch("/api/donate", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(donation)
+
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "Submission failed");
+                }
+
+                message.textContent =
+                    "Donation submitted successfully! ❤️";
+
+                message.style.color = "green";
+
+                form.reset();
+
+                loadDonations();
+
+            } catch (error) {
+
+                message.textContent =
+                    "Error: " + error.message;
+
+                message.style.color = "red";
+
+                console.error(error);
+
+            }
+
+        });
+
+
+        // =================================
+        // 2. LOAD DASHBOARD DATA
+        // =================================
+
+        async function loadDonations() {
+
+            const donationList =
+                document.getElementById("donationList");
+
+            try {
+
+                const response = await fetch("/api/donations");
+
+                if (!response.ok) {
+                    throw new Error("Unable to load donations");
+                }
+
+                const donations = await response.json();
+
+                // Total donations
+                document.getElementById("totalDonations").textContent =
+                    donations.length;
+
+                // Different food types
+                const uniqueFoods = new Set(
+
+                    donations.map(d =>
+                        (d.food || "").trim().toLowerCase()
+                    )
+
+                );
+
+                document.getElementById("foodTypes").textContent =
+                    uniqueFoods.size;
+
+                // Clear previous table data
+                donationList.innerHTML = "";
+
+                if (donations.length === 0) {
+
+                    donationList.innerHTML =
+                        '<tr><td colspan="2">No donations available</td></tr>';
+
+                    return;
+                }
+
+                // Display newest donations first
+                donations.slice().reverse().forEach(donation => {
+
+                    const row = document.createElement("tr");
+
+                    const foodCell = document.createElement("td");
+
+                    foodCell.textContent = donation.food || "";
+
+                    const quantityCell = document.createElement("td");
+
+                    quantityCell.textContent = donation.quantity || "";
+
+                    row.appendChild(foodCell);
+
+                    row.appendChild(quantityCell);
+
+                    donationList.appendChild(row);
+
+                });
+
+            } catch (error) {
+
+                donationList.innerHTML =
+                    '<tr><td colspan="2">Could not load donations</td></tr>';
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        // Load dashboard when page opens
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadDonations
+        );
+
+    
+        // =================================
+        // ADMIN DASHBOARD
+        // =================================
+
+        let foodshareAdminPassword = "";
+
+        async function loadAdminDonations() {
+            const message = document.getElementById("adminMessage");
+            const list = document.getElementById("adminDonationList");
+
+            foodshareAdminPassword =
+                document.getElementById("adminPassword").value;
+
+            if (!foodshareAdminPassword) {
+                message.textContent = "Please enter the admin password.";
+                return;
+            }
+
+            message.textContent = "Loading donations...";
+            list.textContent = "";
+
+            try {
+                const response = await fetch("/api/admin/donations", {
+                    headers: {
+                        "X-Admin-Password": foodshareAdminPassword
+                    }
+                });
+
+                if (response.status === 401) {
+                    message.textContent = "Incorrect admin password.";
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error("Unable to load donations.");
+                }
+
+                const result = await response.json();
+                const donations = result.donations || [];
+
+                message.textContent =
+                    "Admin login successful. Total donations: " +
+                    (result.total_donations ?? donations.length);
+
+                list.textContent = "";
+
+                if (donations.length === 0) {
+                    list.textContent = "No donations found.";
+                    return;
+                }
+
+                donations.slice().reverse().forEach(donation => {
+                    const card = document.createElement("div");
+                    card.style.cssText =
+                        "background:white;padding:20px;margin:15px 0;" +
+                        "border-radius:10px;box-shadow:0 3px 12px #00000012;";
+
+                    const heading = document.createElement("h3");
+                    heading.textContent = donation.food || "Food donation";
+
+                    const details = document.createElement("p");
+                    details.textContent =
+                        "Donor: " + (donation.name || "") +
+                        " | Quantity: " + (donation.quantity || "") +
+                        " | Location: " + (donation.location || "");
+
+                    const status = document.createElement("p");
+                    status.textContent = "Status: " + donation.status;
+                    status.style.fontWeight = "bold";
+                    status.style.color =
+                        donation.status === "collected" ? "#27834b" : "#b7791f";
+
+                    card.append(heading, details, status);
+
+                    if (donation.status === "available") {
+                        const button = document.createElement("button");
+                        button.textContent = "Mark as Collected";
+                        button.style.cssText =
+                            "padding:11px 16px;background:#27834b;" +
+                            "color:white;border:0;border-radius:6px;cursor:pointer;";
+
+                        button.addEventListener("click", () => {
+                            markFoodCollected(donation.id, button);
+                        });
+
+                        card.appendChild(button);
+                    } else {
+                        const note = document.createElement("p");
+                        note.textContent =
+                            "Collected. Automatic deletion is scheduled after 24 hours.";
+                        card.appendChild(note);
+                    }
+
+                    list.appendChild(card);
+                });
+
+            } catch (error) {
+                message.textContent = error.message;
+            }
+        }
+
+        async function markFoodCollected(id, button) {
+            if (!confirm("Has this food donation been collected?")) return;
+
+            button.disabled = true;
+            button.textContent = "Updating...";
+
+            try {
+                const response = await fetch(
+                    "/api/admin/donations/" + encodeURIComponent(id) + "/collect",
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "X-Admin-Password": foodshareAdminPassword
+                        }
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Could not update donation.");
+                }
+
+                alert("Donation successfully marked as collected!");
+                await loadAdminDonations();
+
+            } catch (error) {
+                alert(error.message);
+                button.disabled = false;
+                button.textContent = "Mark as Collected";
+            }
+        }
+
+    </script>
+
+</body>
+</html>
+

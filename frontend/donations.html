@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f4;
+            color: #26352b;
+        }
+
+        header {
+            background: #27834b;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h3 {
+            color: #27834b;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #27834b;
+            color: white;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #555;
+        }
+
+        a {
+            color: #27834b;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍃 FoodShare Dashboard</h1>
+    <p>Helping people through food sharing</p>
+</header>
+
+<div class="container">
+
+    <h2>Overview</h2>
+
+    <div class="stats">
+        <div class="card">
+            <h3>Total Donations</h3>
+            <div class="number" id="totalDonations">0</div>
+        </div>
+
+        <div class="card">
+            <h3>Different Food Items</h3>
+            <div class="number" id="foodTypes">0</div>
+        </div>
+    </div>
+
+    <h2>Recent Donations</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Food Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+
+        <tbody id="donationTable">
+            <tr>
+                <td colspan="2">Loading donations...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="message" id="status"></p>
+
+    <p><a href="/">← Back to FoodShare Home</a></p>
+
+</div>
+
+<script>
+async function loadDonations() {
+    const table = document.getElementById("donationTable");
+    const status = document.getElementById("status");
+
+    try {
+        const response = await fetch("/api/donations");
+
+        if (!response.ok) {
+            throw new Error("Could not load donations");
+        }
+
+        const donations = await response.json();
+
+        document.getElementById("totalDonations").textContent =
+            donations.length;
+
+        const uniqueFoods = new Set(
+            donations.map(item => item.food.toLowerCase())
+        );
+
+        document.getElementById("foodTypes").textContent =
+            uniqueFoods.size;
+
+        table.replaceChildren();
+
+        if (donations.length === 0) {
+            const row = table.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 2;
+            cell.textContent = "No donations available yet.";
+            return;
+        }
+
+        donations.slice().reverse().forEach(item => {
+            const row = table.insertRow();
+
+            row.insertCell().textContent = item.food;
+            row.insertCell().textContent = item.quantity;
+        });
+
+        status.textContent = "Donation data loaded successfully.";
+
+    } catch (error) {
+        table.replaceChildren();
+        status.textContent = "Error loading donations. Please try again.";
+        console.error(error);
+    }
+}
+
+loadDonations();
+</script>
+
+</body>
+</html>
